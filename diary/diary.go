@@ -96,6 +96,11 @@ func (d *Diary) ListDates() []string {
 	return dates
 }
 
+func (d *Diary) DeleteEntry(date string) error {
+	delete(d.Entries, date)
+	return d.Save()
+}
+
 // FormatDate formats the current date as DD-MM-YYYY
 func FormatDate(t time.Time) string {
 	return t.Format("02-01-2006")

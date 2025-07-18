@@ -53,8 +53,7 @@ func StartInteractiveMenu(diaryApp *diary.Diary) {
 		case "6":
 			listAllEntries(diaryApp)
 		case "7":
-			fmt.Println("Not implemented yet.")
-			//deleteEntryByDate(diaryApp)
+			deleteEntryByDate(diaryApp)
 		case "8":
 			fmt.Println("Not implemented yet.")
 			//updateEntryByDate(diaryApp)
@@ -191,5 +190,14 @@ func listAllEntries(diaryApp *diary.Diary) {
 		fmt.Printf("Morning: %s\n", entry.Morning)
 		fmt.Printf("Afternoon: %s\n", entry.Afternoon)
 		fmt.Printf("Evening: %s\n", entry.Evening)
+	}
+}
+
+func deleteEntryByDate(diaryApp *diary.Diary) {
+	dateInput := readInput("Enter date to delete (DD-MM-YYYY): ")
+	if err := diaryApp.DeleteEntry(dateInput); err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("Entry deleted successfully!")
 	}
 }

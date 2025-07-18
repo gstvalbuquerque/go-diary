@@ -42,7 +42,7 @@ Um aplicativo de diário pessoal em linha de comando, escrito em Go, com autenti
 3. **Execute o aplicativo:**
 
    ```sh
-   ./diary
+   ./diary/diary.exe
    ```
 
 4. **Siga o menu interativo para registrar-se, fazer login e gerenciar seu diário.**
