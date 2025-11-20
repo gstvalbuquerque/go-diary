@@ -55,8 +55,7 @@ func StartInteractiveMenu(diaryApp *diary.Diary) {
 		case "7":
 			deleteEntryByDate(diaryApp)
 		case "8":
-			fmt.Println("Not implemented yet.")
-			//updateEntryByDate(diaryApp)
+			updateEntryByDate(diaryApp)
 		case "9":
 			fmt.Println("Thank you for using Daily Diary. Goodbye!")
 			return
@@ -198,6 +197,45 @@ func deleteEntryByDate(diaryApp *diary.Diary) {
 	if err := diaryApp.DeleteEntry(dateInput); err != nil {
 		fmt.Println("Error:", err)
 	} else {
-		fmt.Println("Entry deleted successfully!")
+	}
+}
+
+func updateEntryByDate(diaryApp *diary.Diary) {
+	dateInput := readInput("Enter date to update (DD-MM-YYYY): ")
+	entry, exists := diaryApp.GetEntry(dateInput)
+
+	if !exists {
+		fmt.Println("No entry found for that date.")
+		return
+	}
+
+	fmt.Printf("\n==== Current Entry for %s ====\n", dateInput)
+	fmt.Printf("Morning: %s\n", entry.Morning)
+	fmt.Printf("Afternoon: %s\n", entry.Afternoon)
+	fmt.Printf("Evening: %s\n", entry.Evening)
+
+	section := strings.ToLower(readInput("\nEnter section to update (morning/afternoon/evening): "))
+	if section != "morning" && section != "afternoon" && section != "evening" {
+		fmt.Println("Invalid section. Must be morning, afternoon, or evening.")
+		return
+	}
+
+	var currentContent string
+	switch section {
+	case "morning":
+		currentContent = entry.Morning
+	case "afternoon":
+		currentContent = entry.Afternoon
+	case "evening":
+		currentContent = entry.Evening
+	}
+
+	fmt.Printf("Current content: %s\n", currentContent)
+	newContent := readInput("Enter new content: ")
+
+	if err := diaryApp.AddEntry(dateInput, section, newContent); err != nil {
+		fmt.Println("Error updating entry:", err)
+	} else {
+		fmt.Println("Entry updated successfully!")
 	}
 }
